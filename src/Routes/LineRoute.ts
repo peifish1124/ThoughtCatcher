@@ -1,5 +1,5 @@
 import { Request, Response, Router } from "express";
-import line from "@line/bot-sdk"
+import line from "@line/bot-sdk";
 
 import linebotConfig from "../Configs/linebotConfig.js";
 import TaskController from "../Controllers/TaskController.js";
