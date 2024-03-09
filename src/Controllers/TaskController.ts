@@ -20,6 +20,18 @@ class TaskController {
       res.status(500).end();
     }
   }
+
+  public async getTests(req: Request, res: Response): Promise<void> {
+    try {
+      for (const event of req.body.events) {
+        await this._taskHandler.handleTest(event);
+      }
+      res.json({ success: true });
+    } catch (error) {
+      console.error(error);
+      res.status(500).end();
+    }
+  }
 }
 
 export default TaskController;

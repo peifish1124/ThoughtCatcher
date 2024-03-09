@@ -22,6 +22,18 @@ class LineTaskHandler implements ITaskHandler {
       });
     }
   }
+
+  async handleTest(event: any): Promise<void> {
+    const welcomeMessage = [{
+      type: 'text',
+      text: '左邊按鍵測試成功',
+    }];
+
+    await this.client.replyMessage({
+      replyToken: event.replyToken, 
+      messages: welcomeMessage
+    });
+  }
 }
 
 export default LineTaskHandler;
