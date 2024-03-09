@@ -1,5 +1,5 @@
 import ITaskHandler from "./ITaskHandler.js";
-import line from '@line/bot-sdk';
+import line from "@line/bot-sdk";
 import linebotConfig from "../../Configs/linebotConfig.js";
 
 class LineTaskHandler implements ITaskHandler {
@@ -9,18 +9,40 @@ class LineTaskHandler implements ITaskHandler {
     this.client = new line.messagingApi.MessagingApiClient(linebotConfig);
   }
 
-  async handleTask(event: any): Promise<void> {
-    if (event.type === 'message') {
-      const welcomeMessage = [{
-        type: 'text',
-        text: '歡迎加入 ThoughtCatcher 機器人，有任何想紀錄的事情都歡迎跟我說！',
-      }];
+  async getAllTasks(event: any): Promise<void> {
+    const leftMessage = [{
+      type: 'text',
+      text: '左邊按鍵成功',
+    }];
 
-      await this.client.replyMessage({
-        replyToken: event.replyToken, 
-        messages: welcomeMessage
-      });
-    }
+    await this.client.replyMessage({
+      replyToken: event.replyToken, 
+      messages: leftMessage
+    });
+  }
+
+  async addNewTask(event: any): Promise<void> {
+    const rightMessage = [{
+      type: 'text',
+      text: '右邊按鍵成功',
+    }];
+
+    await this.client.replyMessage({
+      replyToken: event.replyToken, 
+      messages: rightMessage
+    });
+  }
+
+  async welcomeMessage(event: any): Promise<void> {
+    const welcomeMessage = [{
+      type: 'text',
+      text: '歡迎使用 Thought Catcher, 有想紀錄的都可以跟我說！',
+    }];
+
+    await this.client.replyMessage({
+      replyToken: event.replyToken, 
+      messages: welcomeMessage
+    });
   }
 }
 

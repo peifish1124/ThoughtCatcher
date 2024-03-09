@@ -1,5 +1,7 @@
 interface ITaskHandler {
-  handleTask(event: any): Promise<void>;
+  getAllTasks(event: any): Promise<void>;
+  addNewTask(event: any): Promise<void>;
+  welcomeMessage(event: any): Promise<void>;
 }
 
 export default ITaskHandler;

@@ -9,11 +9,29 @@ class TaskController {
     this._taskHandler = taskHandler;
   }
 
-  public async getTasks(req: Request, res: Response): Promise<void> {
+  public async getTasks(event: any, res: Response): Promise<void> {
     try {
-      for (const event of req.body.events) {
-        await this._taskHandler.handleTask(event);
-      }
+      await this._taskHandler.getAllTasks(event); // may have other logics
+      res.json({ success: true });
+    } catch (error) {
+      console.error(error);
+      res.status(500).end();
+    }
+  }
+
+  public async addTask(event: any, res: Response): Promise<void> {
+    try {
+      await this._taskHandler.addNewTask(event);
+      res.json({ success: true });
+    } catch (error) {
+      console.error(error);
+      res.status(500).end();
+    }
+  }
+
+  public async getWelcome(event: any, res: Response): Promise<void> {
+    try {
+      await this._taskHandler.welcomeMessage(event);
       res.json({ success: true });
     } catch (error) {
       console.error(error);
