@@ -28,7 +28,13 @@ class TaskController {
       } 
 
       const tasks: Task[] = await this._taskHandler.getTaskList(user_id);
-      const message: string = tasks.map(task => task.content).join('\n');
+
+      var message: string;
+      if (tasks.length == 0) {
+        message = '目前沒有任務喔！'
+      } else {
+        message = tasks.map(task => task.content).join('\n');
+      }
 
       await this._messageHandler.sendMessage(event, message);
       res.json({ success: true });

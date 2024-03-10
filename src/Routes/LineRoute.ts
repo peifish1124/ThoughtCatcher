@@ -18,6 +18,7 @@ router.post("/connect", line.middleware(linebotConfig), async (req: Request, res
       const action = params.get('action')
 
       if (action === 'getTasks') {
+        console.log("getTasks clicked");
         const taskController = new TaskController(new MongodbTaskHandler(), new MongodbUserHandler(), new LineMessageHandler());
         taskController.getTasks(event, res);
       } 
