@@ -22,16 +22,18 @@ router.post("/connect", line.middleware(linebotConfig), async (req: Request, res
         const taskController = new TaskController(new MongodbTaskHandler(), new MongodbUserHandler(), new LineMessageHandler());
         taskController.getTasks(event, res);
       } 
-      // else if (action === 'addTask') {
-      //   const taskController = new TaskController(new LineTaskHandler());
-      //   taskController.addTask(event, res);
-      // }
+      else if (action === 'addTask') {
+        console.log("addTask clicked");
+        const taskController = new TaskController(new MongodbTaskHandler(), new MongodbUserHandler(), new LineMessageHandler());
+        taskController.addTaskInstruction(event, res);
+      }
     } 
     
-    // else if (event.type === 'message') {
-    //   const taskController = new TaskController(new LineTaskHandler());
-    //   taskController.getWelcome(event, res);
-    // }
+    else if (event.type === 'message' && event.message.type === 'text') {
+      console.log("new task adding");
+      const taskController = new TaskController(new MongodbTaskHandler(), new MongodbUserHandler(), new LineMessageHandler());
+      taskController.addTask(event, res);
+    }
   });
 });
 

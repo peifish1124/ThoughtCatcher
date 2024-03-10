@@ -20,6 +20,18 @@ class LineMessageHandler implements IMessageHandler {
       messages: Message
     });
   }
+
+  async addTaskInstruction(event: any): Promise<void> {
+    const Message = [{
+      type: 'text',
+      text: '請輸入想新增的 Task 內容！',
+    }];
+
+    await this.client.replyMessage({
+      replyToken: event.replyToken, 
+      messages: Message
+    });
+  }
 }
 
 export default LineMessageHandler;

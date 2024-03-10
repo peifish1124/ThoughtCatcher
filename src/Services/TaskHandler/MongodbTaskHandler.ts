@@ -32,6 +32,32 @@ class MongodbTaskHandler implements ITaskHandler {
         await client.close();
     }
   }
+
+  async addNewTask(user_id: string, content: string): Promise<Task> {
+    try {
+        await client.connect();
+
+        const db = await getDb();
+        const collection = db.collection('Task');
+
+        const result = await collection.insertOne({
+            user_id: user_id,
+            content: content
+        });
+
+        const newTask: Task = {
+            id: result.insertedId.toString(),
+            user_id: user_id,
+            content: content
+          }
+  
+        return newTask;
+    } catch (error) {
+        throw new Error(`Error inserting tasks: ${error}`);
+    } finally {
+        await client.close();
+    }    
+  }
 }
 
 export default MongodbTaskHandler;

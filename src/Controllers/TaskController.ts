@@ -31,11 +31,42 @@ class TaskController {
 
       var message: string;
       if (tasks.length == 0) {
-        message = '目前沒有任務喔！'
+        message = '目前沒有 Task 喔！'
       } else {
         message = tasks.map(task => task.content).join('\n');
       }
 
+      await this._messageHandler.sendMessage(event, message);
+      res.json({ success: true });
+    } catch (error) {
+      console.error(error);
+      res.status(500).end();
+    }
+  }
+  
+  public async addTaskInstruction(event: any, res: Response): Promise<void> {
+    try {
+      await this._messageHandler.addTaskInstruction(event);
+      res.json({ success: true });
+    } catch (error) {
+      console.error(error);
+      res.status(500).end();
+    }
+  }
+
+  public async addTask(event: any, res: Response): Promise<void> {
+    try {
+      const line_id: string = event.source.userId;
+      var user_id: string = await this._userHandler.getUserId(line_id);
+      if (user_id == '') {
+        const user: User = await this._userHandler.addUser(line_id);
+        user_id = user.id;
+      } 
+
+      const taskText = event.message.text;
+      const task: Task = await this._taskHandler.addNewTask(user_id, taskText);
+
+      var message: string = `Task：${taskText} 新增成功！`
       await this._messageHandler.sendMessage(event, message);
       res.json({ success: true });
     } catch (error) {
